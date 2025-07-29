@@ -17,9 +17,14 @@ class EnlightnServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/enlightn.php' => config_path('enlightn.php'),
-            ], 'enlightn');
+            $this->publishes(
+                [
+                    __DIR__ . "/../config/enlightn.php" => config_path(
+                        "enlightn.php",
+                    ),
+                ],
+                "enlightn",
+            );
         }
     }
 
@@ -35,7 +40,7 @@ class EnlightnServiceProvider extends ServiceProvider
             Console\BaselineCommand::class,
         ]);
 
-        $this->mergeConfigFrom(__DIR__.'/../config/enlightn.php', 'enlightn');
+        $this->mergeConfigFrom(__DIR__ . "/../config/enlightn.php", "enlightn");
 
         $this->app->singleton(Inspector::class);
         $this->app->resolving(Inspector::class, function ($inspector) {
@@ -43,24 +48,25 @@ class EnlightnServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(Composer::class, function ($app) {
-            return new Composer($app->make('files'), $app->basePath());
+            return new Composer($app->make("files"), $app->basePath());
         });
 
         $this->app->singleton(PHPStan::class, function ($app) {
-            return new PHPStan($app->make('files'), $app->basePath());
+            return new PHPStan($app->make("files"), $app->basePath());
         });
         $this->app->afterResolving(PHPStan::class, function ($PHPStan) {
             $PHPStan->start(Enlightn::$filePaths->toArray());
         });
 
         $this->app->singleton(NPM::class, function ($app) {
-            return new NPM($app->make('files'), $app->basePath());
+            return new NPM($app->make("files"), $app->basePath());
         });
 
         $this->app->singleton(API::class, function ($app) {
             $client = new Client(
-                $app->config->get('enlightn.credentials.username'),
-                $app->config->get('enlightn.credentials.api_token')
+                $app->config->get("enlightn.credentials.username"),
+                $app->config->get("enlightn.credentials.api_token"),
+                $app->config->get("enlightn.api_url"),
             );
 
             return new API($client);

@@ -14,15 +14,15 @@ class Client
     public function __construct(
         $username,
         $apiToken,
-        string $baseUrl = 'https://www.laravel-enlightn.com/api/',
-        float $timeout = 10.0
+        string $baseUrl = "https://www.laravel-enlightn.com/api/",
+        float $timeout = 10.0,
     ) {
         $this->client = new GuzzleClient([
-            'base_uri' => $baseUrl,
-            'auth' => [$username, $apiToken],
-            'timeout' => $timeout,
-            'http_errors' => false,
-            'headers' => ['Accept' => 'application/json'],
+            "base_uri" => $baseUrl,
+            "auth" => [$username, $apiToken],
+            "timeout" => $timeout,
+            "http_errors" => false,
+            "headers" => ["Accept" => "application/json"],
         ]);
     }
 
@@ -33,7 +33,7 @@ class Client
      */
     public function get(string $url, array $data = [])
     {
-        return $this->request('GET', $url, $data);
+        return $this->request("GET", $url, $data);
     }
 
     /**
@@ -43,7 +43,7 @@ class Client
      */
     public function post(string $url, array $data = [])
     {
-        return $this->request('POST', $url, $data);
+        return $this->request("POST", $url, $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class Client
      */
     public function patch(string $url, array $data = [])
     {
-        return $this->request('PATCH', $url, $data);
+        return $this->request("PATCH", $url, $data);
     }
 
     /**
@@ -63,7 +63,7 @@ class Client
      */
     public function put(string $url, array $data = [])
     {
-        return $this->request('PUT', $url, $data);
+        return $this->request("PUT", $url, $data);
     }
 
     /**
@@ -73,7 +73,7 @@ class Client
      */
     public function delete(string $url, array $data = [])
     {
-        return $this->request('DELETE', $url, $data);
+        return $this->request("DELETE", $url, $data);
     }
 
     /**
@@ -86,17 +86,21 @@ class Client
     public function request(string $httpVerb, string $url, array $data = [])
     {
         $response = $this->client->request($httpVerb, $url, [
-            'json' => $data,
+            "json" => $data,
         ]);
 
         $statusCode = $response->getStatusCode();
 
         if ($statusCode === 403 || $statusCode === 401) {
-            throw new UnauthorizedException("Invalid credentials. Please check your username and API token.");
+            throw new UnauthorizedException(
+                "Invalid credentials. Please check your username and API token.",
+            );
         }
 
         if ($statusCode !== 200 && $statusCode !== 204) {
-            throw new BadResponseException("Bad response: ".$response->getBody());
+            throw new BadResponseException(
+                "Bad response: " . $response->getBody(),
+            );
         }
 
         $responseData = json_decode($response->getBody(), true);

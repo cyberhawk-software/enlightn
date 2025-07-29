@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Enlightn Analyzer Classes
@@ -12,13 +11,13 @@ return [
     | various methods such as static analysis. Feel free to customize it.
     |
     */
-    'analyzers' => ['*'],
+    "analyzers" => ["*"],
 
     // If you wish to skip running some analyzers, list the classes in the array below.
-    'exclude_analyzers' => [],
+    "exclude_analyzers" => [],
 
     // If you wish to skip running some analyzers in CI mode, list the classes below.
-    'ci_mode_exclude_analyzers' => [],
+    "ci_mode_exclude_analyzers" => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -31,9 +30,13 @@ return [
     | key is the base namespace to resolve the class name.
     |
     */
-    'analyzer_paths' => [
-        'Enlightn\\Enlightn\\Analyzers' => base_path('vendor/enlightn/enlightn/src/Analyzers'),
-        'Enlightn\\EnlightnPro\\Analyzers' => base_path('vendor/enlightn/enlightnpro/src/Analyzers'),
+    "analyzer_paths" => [
+        "Enlightn\\Enlightn\\Analyzers" => base_path(
+            "vendor/enlightn/enlightn/src/Analyzers",
+        ),
+        "Enlightn\\EnlightnPro\\Analyzers" => base_path(
+            "vendor/enlightn/enlightnpro/src/Analyzers",
+        ),
     ],
 
     /*
@@ -46,10 +49,10 @@ return [
     | folder, migrations folder and the seeders folder.
     |
     */
-    'base_path' => [
+    "base_path" => [
         app_path(),
-        database_path('migrations'),
-        database_path('seeders'),
+        database_path("migrations"),
+        database_path("seeders"),
     ],
 
     /*
@@ -62,7 +65,7 @@ return [
     | analyzers if the environment does not match.
     |
     */
-    'skip_env_specific' => env('ENLIGHTN_SKIP_ENVIRONMENT_SPECIFIC', false),
+    "skip_env_specific" => env("ENLIGHTN_SKIP_ENVIRONMENT_SPECIFIC", false),
 
     /*
     |--------------------------------------------------------------------------
@@ -74,7 +77,7 @@ return [
     | Example: '/login'.
     |
     */
-    'guest_url' => null,
+    "guest_url" => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +91,7 @@ return [
     | Example: [\Enlightn\Enlightn\Analyzers\Security\XSSAnalyzer::class].
     |
     */
-    'dont_report' => [],
+    "dont_report" => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +104,7 @@ return [
     | to auto-generate this. Patterns are supported in details.
     |
     */
-    'ignore_errors' => [],
+    "ignore_errors" => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -113,10 +116,22 @@ return [
     | on your application needs.
     |
     */
-    'license_whitelist' => [
-        'Apache-2.0', 'Apache2', 'BSD-2-Clause', 'BSD-3-Clause', 'LGPL-2.1-only', 'LGPL-2.1',
-        'LGPL-2.1-or-later', 'LGPL-3.0', 'LGPL-3.0-only', 'LGPL-3.0-or-later', 'MIT', 'ISC',
-        'CC0-1.0', 'Unlicense', 'WTFPL',
+    "license_whitelist" => [
+        "Apache-2.0",
+        "Apache2",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "LGPL-2.1-only",
+        "LGPL-2.1",
+        "LGPL-2.1-or-later",
+        "LGPL-3.0",
+        "LGPL-3.0-only",
+        "LGPL-3.0-or-later",
+        "MIT",
+        "ISC",
+        "CC0-1.0",
+        "Unlicense",
+        "WTFPL",
     ],
 
     /*
@@ -129,46 +144,46 @@ return [
     | and add review comments on your pull requests.
     |
     */
-    'credentials' => [
-        'username' => env('ENLIGHTN_USERNAME'),
-        'api_token' => env('ENLIGHTN_API_TOKEN'),
+    "credentials" => [
+        "username" => env("ENLIGHTN_USERNAME"),
+        "api_token" => env("ENLIGHTN_API_TOKEN"),
     ],
+
+    "api_url" => env(
+        "ENLIGHTN_API_URL",
+        "https://www.laravel-enlightn.com/api/",
+    ),
 
     // Set this value to your Github repo for integrating with the Enlightn Github Bot
     // Format: "myorg/myrepo" like "laravel/framework".
-    'github_repo' => env('ENLIGHTN_GITHUB_REPO'),
+    "github_repo" => env("ENLIGHTN_GITHUB_REPO"),
 
     // Set to true to restrict the max number of files displayed in the enlightn
     // command for each check. Set to false to display all files.
-    'compact_lines' => true,
+    "compact_lines" => true,
 
     // List your commercial packages (licensed by you) below, so that they are not
     // flagged by the License Analyzer.
-    'commercial_packages' => [
-        'enlightn/enlightnpro',
+    "commercial_packages" => ["enlightn/enlightnpro"],
+
+    "allowed_permissions" => [
+        base_path() => "775",
+        app_path() => "775",
+        resource_path() => "775",
+        storage_path() => "775",
+        public_path() => "775",
+        config_path() => "775",
+        database_path() => "775",
+        base_path("routes") => "775",
+        app()->bootstrapPath() => "775",
+        app()->bootstrapPath("cache") => "775",
+        app()->bootstrapPath("app.php") => "664",
+        base_path("artisan") => "775",
+        public_path("index.php") => "664",
+        public_path("server.php") => "664",
     ],
 
-    'allowed_permissions' => [
-        base_path() => '775',
-        app_path() => '775',
-        resource_path() => '775',
-        storage_path() => '775',
-        public_path() => '775',
-        config_path() => '775',
-        database_path() => '775',
-        base_path('routes') => '775',
-        app()->bootstrapPath() => '775',
-        app()->bootstrapPath('cache') => '775',
-        app()->bootstrapPath('app.php') => '664',
-        base_path('artisan') => '775',
-        public_path('index.php') => '664',
-        public_path('server.php') => '664',
-    ],
-
-    'writable_directories' => [
-        storage_path(),
-        app()->bootstrapPath('cache'),
-    ],
+    "writable_directories" => [storage_path(), app()->bootstrapPath("cache")],
 
     /*
     |--------------------------------------------------------------------------
@@ -178,9 +193,9 @@ return [
     | This setting allows us to pass through memory limits from artisan to phpstan.
     | using `php -d memory_limit=1G artisan enlightn`.
     */
-    'phpstan' => [
-        '--error-format' => 'json',
-        '--no-progress' => true,
-        '--memory-limit' => ini_get('memory_limit'),
+    "phpstan" => [
+        "--error-format" => "json",
+        "--no-progress" => true,
+        "--memory-limit" => ini_get("memory_limit"),
     ],
 ];
