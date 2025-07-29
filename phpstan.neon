@@ -68,9 +68,7 @@ services:
         tags:
             - phpstan.rules.rule
     -
-        class: PHPStan\Rules\DeadCode\NoopRule
-        arguments:
-            logicalXor: %featureToggles.logicalXor%
+        class: PHPStan\Rules\DeadCode\BetterNoopRule
         tags:
             - phpstan.rules.rule
     -
