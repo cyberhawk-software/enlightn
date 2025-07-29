@@ -1,5 +1,5 @@
 {
-    "name": "enlightn/enlightn",
+    "name": "cyberhawk-software/enlightn",
     "description": "Enlightn - Your performance & security consultant, an artisan command away.",
     "type": "library",
     "keywords": [
@@ -14,7 +14,6 @@
         "audit",
         "analysis tool"
     ],
-    "homepage": "https://www.laravel-enlightn.com/",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
