@@ -10,7 +10,7 @@ use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Return_;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\CloningVisitor;
-use PhpParser\Parser\Php7;
+use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter\Standard;
 
 class ConfigManipulator
@@ -48,17 +48,18 @@ class ConfigManipulator
      */
     public function replace(string $configFilePath, $configValues = [])
     {
-        $lexer = new Emulative([
+        $lexer = new Emulative();
+        $parser = (new ParserFactory)->createForNewestSupportedVersion([
             'usedAttributes' => [
                 'comments',
                 'startLine', 'endLine',
                 'startTokenPos', 'endTokenPos',
             ],
         ]);
-        $parser = new Php7($lexer);
 
-        $ast = $parser->parse((new Filesystem)->get($configFilePath));
-        $oldTokens = $lexer->getTokens();
+        $code = (new Filesystem)->get($configFilePath);
+        $ast = $parser->parse($code);
+        $oldTokens = $lexer->tokenize($code);
 
         $traverser = new NodeTraverser;
         $traverser->addVisitor(new CloningVisitor);
